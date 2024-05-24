@@ -55,6 +55,7 @@ app.get('/books/:id', (req, res) => {
     conn.query(querySQL , (err, data) => {
         if(err) {
             console.error(err)
+            return
         }
 
         const book = data[0]
@@ -63,11 +64,59 @@ app.get('/books/:id', (req, res) => {
     })
 })
 
+app.get('/books/edit/:id', (req, res) => {
+    const id = req.params.id
+
+    const querySql = `SELECT * FROM books WHERE id = ${id}`
+
+    conn.query(querySql, (err, data) => {
+        if(err) {
+            console.error(err)
+            return
+        }
+
+        const book = data[0]
+
+        res.render('editbook', { book })
+    })
+})
+
+app.post('/books/updatebook', (req, res) => {
+    const id = req.body.id
+    const title = req.body.title
+    const pgqty = req.body.qtdpages
+
+    const querySql = `UPDATE books SET title = '${title}', pageqty = ${pgqty} WHERE id = ${id}`
+
+    conn.query(querySql, (err, data) => {
+        if(err) {
+            console.error(err)
+            return
+        }
+
+        res.redirect('/books')
+    })
+})
+
 const conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
     database: 'nodemysql'
+})
+
+app.post('/books/remove/:id', (req, res) => {
+    const id = req.params.id
+
+    const querySql = `DELETE FROM books WHERE id = ${id}`
+
+    conn.query(querySql, (err, data) => {
+        if(err) {
+            console.error(err)
+            return
+        }
+        res.redirect('/books')
+    })
 })
 
 conn.connect((err) => {

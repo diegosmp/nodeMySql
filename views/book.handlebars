@@ -3,5 +3,11 @@
             <h2>{{book.id}} - {{book.title}}</h2>
             <p>Quantidade de páginas: {{book.pageqty}}</p>
             <a href="/books">Voltar</a>
+            <div class="actions">
+                <a href="/books/edit/{{book.id}}">Editar</a>
+                <form action="/books/remove/{{book.id}}" method="post">
+                    <button>Excluir</button>
+                </form>
+            </div>
         </div>
 </div>
