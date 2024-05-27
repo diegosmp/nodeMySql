@@ -1,9 +1,13 @@
 <h2>Livros disponíveis</h2>
 <div class="books-container">
-    {{#each books}}
-        <div class="card-book">
-            <h2>{{this.id}} - {{this.title}}</h2>
-            <a href="/books/{{this.id}}">Saiba mais</a>
-        </div>
-    {{/each}}
+    {{#if books}}
+        {{#each books}}
+            <div class="card-book">
+                <h2>{{this.id}} - {{this.title}}</h2>
+                <a href="/books/{{this.id}}">Saiba mais</a>
+            </div>
+        {{/each}}
+    {{else}}
+    <h2>Nenhum livro cadastrado</h2>
+    {{/if}}
 </div>
